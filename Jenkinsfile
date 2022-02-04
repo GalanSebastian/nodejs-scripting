@@ -13,7 +13,6 @@ pipeline {
             steps {
                 script{
                     sh '''
-                        groupadd docker
                         usermod -aG docker ${USER}
                         su -s ${USER}
                         docker run hello-world
