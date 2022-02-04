@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:6-alpine'
-            args '-p 3456:3456'
-        }
-    }
+    agent any
     parameters {
         string(name: 'FROM_BUILD', defaultValue: '', description: 'Build source')
         booleanParam(name: 'IS_READY', defaultValue: false, description: 'Is ready for prod?')
@@ -17,27 +12,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compiling...'
-                sleep 10
+                sleep 2
             }
         }
         stage('Deploy') {
             steps {
-                echo "Deploying from source ${params.FROM_BUILD}"
-                sh '''
-                    sudo mkdir ~/.npm-global
-                    npm config set prefix '~/.npm-global'
-                    export PATH=~/.npm-global/bin:$PATH
-                    source ~/.profile
-                    npm install -g jshint
-                    touch .env
-                    echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
-                    echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
-                    echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
-                    echo "API_GATEWAY=${API_GATEWAY}" >> .env
-                    cat .env
-                    npm install
-                    npm run start
-                '''
+                script{
+                    def image = docker.image('mhart/alpine-node:8.11.3')
+                    image.pull()
+                    image.inside() {
+                        sh 'id'
+                        sh 'ls -lrt'
+                        sh 'node yarn install'
+                    }
+                }
             }
         }
     }
