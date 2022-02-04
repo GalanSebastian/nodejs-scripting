@@ -28,14 +28,12 @@ pipeline {
                     
                 '''
                 script{
-                    def image = docker.image('mhart/alpine-node')
+                    def image = docker.image('nginx:alpine')
                     image.pull()
                     image.inside() {
                         sh '''
                             npm -v
-                            mkdir /etc/docker
-                            touch /etc/docker/daemon.json
-                            echo "{"dns": ["10.0.0.2", "8.8.8.8"]}" >> /etc/docker/daemon.json
+                            cat .env
                             npm install
                             npm run start
                         '''
