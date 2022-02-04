@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'mhart/alpine-node:8.11.3'
-        }
-    }
+    agent any
     parameters {
         string(name: 'FROM_BUILD', defaultValue: '', description: 'Build source')
         booleanParam(name: 'IS_READY', defaultValue: false, description: 'Is ready for prod?')
@@ -23,16 +19,25 @@ pipeline {
             steps {
                 echo "Deploying from source ${params.FROM_BUILD}"
                 sh '''
-                    npm -v
                     touch .env
                     echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
                     echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
                     echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
                     echo "API_GATEWAY=${API_GATEWAY}" >> .env
                     cat .env
-                    npm install
-                    npm run start
+                    
                 '''
+                def image = docker.image('node')
+                    image.pull()
+                    image.inside() {
+                        sh '''
+                            sh 'id'
+                            sh 'ls -lrt'
+                            sh 'npm -v'
+                            npm install
+                            npm run start
+                        '''
+                    }
             }
         }
     }
