@@ -28,7 +28,7 @@ pipeline {
                     
                 '''
                 script{
-                    def image = docker.image('mhart/alpine-node')
+                    def image = docker.image('node')
                     image.pull()
                     image.inside() {
                         sh '''
