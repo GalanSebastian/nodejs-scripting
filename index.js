@@ -20,6 +20,7 @@ const { CIQ_PARTNERS_DOMAIN, PRODUCTION, DR } = require('./settings');
             const message = 'DR env is not needed to be updated in Cloudflare for now';
             return await notifyCiqSettingApi({ domain, env, error: message, isReady: true });
         }
+        console.log(env)
         // // else 
 
         const customOriginServer = process.env.CUSTOM_ORIGIN_SERVER || '';
