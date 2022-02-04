@@ -24,6 +24,10 @@ pipeline {
             steps {
                 echo "Deploying from source ${params.FROM_BUILD}"
                 sh '''
+                    mkdr /etc/docker
+                    touch /etc/docker/daemon.json
+                    echo "{"dns": ["10.0.0.2", "8.8.8.8"]}" >> /etc/docker/daemon.json
+                    cat /etc/docker/daemon.json
                     touch .env
                     echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
                     echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
