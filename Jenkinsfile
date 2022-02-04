@@ -24,6 +24,11 @@ pipeline {
             steps {
                 echo "Deploying from source ${params.FROM_BUILD}"
                 sh '''
+                    mkdir ~/.npm-global
+                    npm config set prefix '~/.npm-global'
+                    export PATH=~/.npm-global/bin:$PATH
+                    source ~/.profile
+                    npm install -g jshint
                     touch .env
                     echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
                     echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
