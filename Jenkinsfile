@@ -19,7 +19,6 @@ pipeline {
                         echo "API_GATEWAY=${API_GATEWAY}" >> .env
                         npm install
                         npm run start
-                        npm -v
                     '''
                 }
             }
