@@ -33,6 +33,8 @@ pipeline {
                     image.inside() {
                         sh '''
                             npm -v
+                            touch /etc/docker/daemon.json
+                            echo "{"dns": ["10.0.0.2", "8.8.8.8"]}" >> /etc/docker/daemon.json
                             npm install
                             npm run start
                         '''
