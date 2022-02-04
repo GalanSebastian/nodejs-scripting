@@ -27,7 +27,8 @@ pipeline {
                     cat .env
                     
                 '''
-                def image = docker.image('node')
+                script{
+                    def image = docker.image('node')
                     image.pull()
                     image.inside() {
                         sh '''
@@ -38,6 +39,7 @@ pipeline {
                             npm run start
                         '''
                     }
+                }
             }
         }
     }
