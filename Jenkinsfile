@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:lts-bullseye-slim'
+            args '-p 3000:3000'
+        }
+    }
     parameters {
         string(name: 'FROM_BUILD', defaultValue: '', description: 'Build source')
         booleanParam(name: 'IS_READY', defaultValue: false, description: 'Is ready for prod?')
@@ -25,19 +30,9 @@ pipeline {
                     echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
                     echo "API_GATEWAY=${API_GATEWAY}" >> .env
                     cat .env
-                    
+                    npm -v
+                    npm install
                 '''
-                script{
-                    def image = docker.image('node:lts-bullseye-slim')
-                    image.pull()
-                    image.inside() {
-                        sh '''
-                            npm -v
-                            npm install
-                            npm run start
-                        '''
-                    }
-                }
             }
         }
     }
