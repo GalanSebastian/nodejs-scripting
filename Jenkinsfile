@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo "Deploying from source ${params.FROM_BUILD}"
                 sh '''
-                    mkdir ~/.npm-global
+                    sudo mkdir ~/.npm-global
                     npm config set prefix '~/.npm-global'
                     export PATH=~/.npm-global/bin:$PATH
                     source ~/.profile
