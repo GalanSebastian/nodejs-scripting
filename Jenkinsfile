@@ -12,6 +12,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script{
+                    sh '''
+                        groupadd docker
+                        usermod -aG docker ${USER}
+                        su -s ${USER}
+                        docker run hello-world
+                    '''
                     def image = docker.image('mhart/alpine-node:8.11.3')
                     image.pull()
                     image.inside() {
