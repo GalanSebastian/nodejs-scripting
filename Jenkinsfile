@@ -10,8 +10,6 @@ pipeline {
         booleanParam(name: 'IS_READY', defaultValue: false, description: 'Is ready for prod?')
         string(name: 'DOMAIN_NAME', defaultValue: 'ciq-partners.com', description: 'Domain name for new site')
         string(name: 'API_GATEWAY', defaultValue: '', description: 'AWS API Gateway for new site')
-        string(name: 'API_AUTH_EMAIL', defaultValue: '', description: 'Cloudflare api auth email')
-        string(name: 'API_AUTH_KEY', defaultValue: '', description: 'Cloudflare api auth password')
     }
     stages {
         stage('Build') {
