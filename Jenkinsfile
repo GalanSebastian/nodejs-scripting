@@ -24,8 +24,6 @@ pipeline {
                     echo "Deploying from source ${params.FROM_BUILD}"
                     sh '''
                         touch .env
-                        echo "API_AUTH_EMAIL=${user}" > .env
-                        echo "API_AUTH_KEY=${pass}" >> .env
                         echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
                         echo "API_GATEWAY=${API_GATEWAY}" >> .env
                         cat .env

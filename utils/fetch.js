@@ -5,13 +5,13 @@ function fetcher(url, settings = {}, includeCfHeaders = true) {
     
     console.log(process.env.DOMAIN_NAME)
     console.log(process.env.API_GATEWAY)
-    console.log(process.env.API_AUTH_EMAIL)
-    console.log(process.env.API_AUTH_KEY)
+    console.log(process.env.user)
+    console.log(process.env.pass)
     console.log(process.env)
 
     const defaultHeaders = {
-        'X-Auth-Email': process.env.API_AUTH_EMAIL,
-        'X-Auth-Key': process.env.API_AUTH_KEY,
+        'X-Auth-Email': process.env.user,
+        'X-Auth-Key': process.env.pass,
         'Content-Type': 'application/json',
     }
 
