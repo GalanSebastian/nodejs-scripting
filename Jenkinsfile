@@ -24,6 +24,16 @@ pipeline {
                         sh 'id'
                         sh 'ls -lrt'
                         sh 'npm -v'
+                        sh '''
+                            touch .env
+                            echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
+                            echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
+                            echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
+                            echo "API_GATEWAY=${API_GATEWAY}" >> .env
+                            cat .env
+                            npm install
+                            npm run start
+                        '''
                     }
                 }
             }
