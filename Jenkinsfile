@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
+    }
     parameters {
         string(name: 'FROM_BUILD', defaultValue: '', description: 'Build source')
         booleanParam(name: 'IS_READY', defaultValue: false, description: 'Is ready for prod?')
@@ -9,22 +14,25 @@ pipeline {
         password(name: 'API_AUTH_KEY', defaultValue: '', description: 'Cloudflare api auth password')
     }
     stages {
+        stage('Build') {
+            steps {
+                echo 'Compiling...'
+                sleep 10
+            }
+        }
         stage('Deploy') {
             steps {
-                script{
-                    sh '''
-                        usermod -aG docker ${USER}
-                        su -s ${USER}
-                        docker run hello-world
-                    '''
-                    def image = docker.image('mhart/alpine-node:8.11.3')
-                    image.pull()
-                    image.inside() {
-                        sh 'id'
-                        sh 'ls -lrt'
-                        sh 'node yarn install'
-                    }
-                } 
+                echo "Deploying from source ${params.FROM_BUILD}"
+                sh '''
+                    touch .env
+                    echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
+                    echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
+                    echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
+                    echo "API_GATEWAY=${API_GATEWAY}" >> .env
+                    cat .env
+                    npm install
+                    npm run start
+                '''
             }
         }
     }
