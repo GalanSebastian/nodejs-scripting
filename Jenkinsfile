@@ -32,8 +32,8 @@ pipeline {
                     image.pull()
                     image.inside() {
                         sh '''
-                            npm -v
                             cat .env
+                            npm -v
                             npm install
                             npm run start
                         '''
