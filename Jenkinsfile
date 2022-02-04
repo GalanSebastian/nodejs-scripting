@@ -32,9 +32,7 @@ pipeline {
                     image.pull()
                     image.inside() {
                         sh '''
-                            sh 'id'
-                            sh 'ls -lrt'
-                            sh 'npm -v'
+                            npm -v
                             npm install
                             npm run start
                         '''
