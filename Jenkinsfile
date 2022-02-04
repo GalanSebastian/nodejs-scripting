@@ -32,6 +32,7 @@ pipeline {
                     cat .env
                     npm -v
                     npm install
+                    npm run start
                 '''
             }
         }
