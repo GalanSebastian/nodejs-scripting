@@ -1,6 +1,11 @@
 
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
+    }
     parameters {
         string(name: 'FROM_BUILD', defaultValue: '', description: 'Build source')
         booleanParam(name: 'IS_READY', defaultValue: false, description: 'Is ready for prod?')
@@ -26,7 +31,6 @@ pipeline {
                     echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
                     echo "API_GATEWAY=${API_GATEWAY}" >> .env
                     cat .env
-                    apt-get install -y nodejs
                     npm install
                     npm run start
                 '''
