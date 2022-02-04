@@ -21,6 +21,8 @@ const { CIQ_PARTNERS_DOMAIN, PRODUCTION, DR } = require('./settings');
             return await notifyCiqSettingApi({ domain, env, error: message, isReady: true });
         }
         console.log(env)
+        console.log(process.env.API_AUTH_EMAIL)
+        console.log(process.env.API_AUTH_KEY)
         // // else 
 
         const customOriginServer = process.env.CUSTOM_ORIGIN_SERVER || '';

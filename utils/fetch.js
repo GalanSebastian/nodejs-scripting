@@ -2,6 +2,7 @@ const fetch = require('node-fetch');
 const { RETRIES_ON_ERROR } = require('../settings');
 
 function fetcher(url, settings = {}, includeCfHeaders = true) {
+    
     const defaultHeaders = {
         'X-Auth-Email': process.env.API_AUTH_EMAIL,
         'X-Auth-Key': process.env.API_AUTH_KEY,
