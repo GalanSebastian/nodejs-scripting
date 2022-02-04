@@ -28,11 +28,10 @@ pipeline {
                     
                 '''
                 script{
-                    def image = docker.image('nginx:alpine')
+                    def image = docker.image('node:lts-bullseye-slim')
                     image.pull()
                     image.inside() {
                         sh '''
-                            cat .env
                             npm -v
                             npm install
                             npm run start
