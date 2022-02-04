@@ -23,6 +23,7 @@ pipeline {
             steps {
                 echo "Deploying from source ${params.FROM_BUILD}"
                 sh '''
+                    npm -v
                     touch .env
                     echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
                     echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
