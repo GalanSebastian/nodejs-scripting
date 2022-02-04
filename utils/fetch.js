@@ -3,6 +3,11 @@ const { RETRIES_ON_ERROR } = require('../settings');
 
 function fetcher(url, settings = {}, includeCfHeaders = true) {
     
+    console.log(process.env.DOMAIN_NAME)
+    console.log(process.env.API_GATEWAY)
+    console.log(process.env.API_AUTH_EMAIL)
+    console.log(process.env.API_AUTH_KEY)
+
     const defaultHeaders = {
         'X-Auth-Email': process.env.API_AUTH_EMAIL,
         'X-Auth-Key': process.env.API_AUTH_KEY,
