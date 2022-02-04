@@ -7,7 +7,7 @@ function fetcher(url, settings = {}, includeCfHeaders = true) {
     console.log(process.env.API_GATEWAY)
     console.log(process.env.API_AUTH_EMAIL)
     console.log(process.env.API_AUTH_KEY)
-    console.loh(proccess.env)
+    console.loh(process.env)
 
     const defaultHeaders = {
         'X-Auth-Email': process.env.API_AUTH_EMAIL,
