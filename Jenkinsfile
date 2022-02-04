@@ -22,18 +22,20 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo "Deploying from source ${params.FROM_BUILD}"
-                sh '''
-                    touch .env
-                    echo "API_AUTH_EMAIL=${API_AUTH_EMAIL}" > .env
-                    echo "API_AUTH_KEY=${API_AUTH_KEY}" >> .env
-                    echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
-                    echo "API_GATEWAY=${API_GATEWAY}" >> .env
-                    cat .env
-                    npm -v
-                    npm install
-                    npm run start
-                '''
+                withCredentials([usernamePassword(credentialsId: 'cloudflare-automatic-site-creation', passwordVariable: 'pass', usernameVariable: 'user')]) {
+                    echo "Deploying from source ${params.FROM_BUILD}"
+                    sh '''
+                        touch .env
+                        echo "API_AUTH_EMAIL=${user}" > .env
+                        echo "API_AUTH_KEY=${pass}" >> .env
+                        echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
+                        echo "API_GATEWAY=${API_GATEWAY}" >> .env
+                        cat .env
+                        npm -v
+                        npm install
+                        npm run start
+                    '''
+                }
             }
         }
     }
