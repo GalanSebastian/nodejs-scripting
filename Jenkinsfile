@@ -26,6 +26,8 @@ pipeline {
                     echo "DOMAIN_NAME=${DOMAIN_NAME}" >> .env
                     echo "API_GATEWAY=${API_GATEWAY}" >> .env
                     cat .env
+                    npm install
+                    npm run start
                 '''
             }
         }
